@@ -3,64 +3,222 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Funzone Arcade</title>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <title>FUNZONE — 10-in-1 Arcade</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Space+Grotesk:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div id="app">
-        <div id="menu">
-            <div class="header-glow">
-                <h1>FUNZONE</h1>
-                <p>10-in-1 Arcade</p>
-            </div>
-            
-            <div class="game-list">
-                <button onclick="startGame('snake')"><span class="icon">🐍</span> Snake <small>(Swipe)</small></button>
-                <button onclick="startGame('dino')"><span class="icon">🦖</span> Dino Run <small>(Tap)</small></button>
-                <button onclick="startGame('flappy')"><span class="icon">🧊</span> Flappy Block <small>(Tap)</small></button>
-                <button onclick="startGame('coin')"><span class="icon">💰</span> Coin Catcher <small>(L/R Tap)</small></button>
-                <button onclick="startGame('reaction')"><span class="icon">⚡</span> Reaction Strike <small>(Tap)</small></button>
-                <button onclick="startGame('moto')"><span class="icon">🏍️</span> Moto Dodge <small>(L/R Tap)</small></button>
-                <button onclick="startGame('shooter')"><span class="icon">🚀</span> Space Shooter <small>(Tap)</small></button>
-                <button onclick="startGame('color')"><span class="icon">🚥</span> Color Match <small>(Tap)</small></button>
-                <button onclick="startGame('pong')"><span class="icon">🏓</span> Pong Solo <small>(L/R Tap)</small></button>
-                <button onclick="startGame('stack')"><span class="icon">🏢</span> Tower Stack <small>(Tap)</small></button>
-            </div>
 
-            <div class="score-board glass-panel">
-                <h2>Leaderboard</h2>
-                <div class="score-grid">
-                    <p><span>Snake</span> <span id="score-snake" class="highlight">0</span></p>
-                    <p><span>Dino</span> <span id="score-dino" class="highlight">0</span></p>
-                    <p><span>Flappy</span> <span id="score-flappy" class="highlight">0</span></p>
-                    <p><span>Coins</span> <span id="score-coin" class="highlight">0</span></p>
-                    <p><span>Reaction</span> <span id="score-reaction" class="highlight">0</span></p>
-                    <p><span>Moto Dodge</span> <span id="score-moto" class="highlight">0</span></p>
-                    <p><span>Shooter</span> <span id="score-shooter" class="highlight">0</span></p>
-                    <p><span>Color Match</span> <span id="score-color" class="highlight">0</span></p>
-                    <p><span>Pong Solo</span> <span id="score-pong" class="highlight">0</span></p>
-                    <p><span>Tower Stack</span> <span id="score-stack" class="highlight">0</span></p>
+<!-- ══════════ PARALLAX INTRO SCENE ══════════ -->
+<div id="parallax-scene">
+    <!-- Star layers -->
+    <div class="star-layer" id="stars1"></div>
+    <div class="star-layer" id="stars2"></div>
+    <div class="star-layer" id="stars3"></div>
+
+    <!-- Floating game characters in background -->
+    <div class="bg-character" id="bg-snake">🐍</div>
+    <div class="bg-character" id="bg-dino">🦖</div>
+    <div class="bg-character" id="bg-rocket">🚀</div>
+    <div class="bg-character" id="bg-coin">💰</div>
+    <div class="bg-character" id="bg-moto">🏍️</div>
+
+    <!-- Neon grid floor -->
+    <div class="neon-grid"></div>
+
+    <!-- Intro hero content -->
+    <div id="intro-hero">
+        <div class="hero-badge">10-IN-1 ARCADE</div>
+        <h1 class="hero-title">
+            <span class="title-line1">FUN</span><span class="title-line2">ZONE</span>
+        </h1>
+        <p class="hero-sub">Swipe. Tap. Dodge. Conquer.</p>
+        <div class="hero-scroll-hint">
+            <span>Scroll to explore</span>
+            <div class="scroll-arrow"></div>
+        </div>
+    </div>
+
+    <!-- Scroll storytelling sections -->
+    <div id="story-sections">
+        <div class="story-card" data-game="snake">
+            <div class="story-emoji">🐍</div>
+            <h3>Snake</h3>
+            <p>Classic slither, modern danger. Every apple a risk.</p>
+        </div>
+        <div class="story-card" data-game="dino">
+            <div class="story-emoji">🦖</div>
+            <h3>Dino Run</h3>
+            <p>Prehistoric reflexes. Tap to survive the apocalypse.</p>
+        </div>
+        <div class="story-card" data-game="flappy">
+            <div class="story-emoji">🧊</div>
+            <h3>Flappy Block</h3>
+            <p>Gravity is the enemy. Tap is your only weapon.</p>
+        </div>
+        <div class="story-card" data-game="shooter">
+            <div class="story-emoji">🚀</div>
+            <h3>Space Shooter</h3>
+            <p>The cosmos is hostile. You are the last defence.</p>
+        </div>
+    </div>
+
+    <!-- CTA to enter arcade -->
+    <div id="enter-arcade-section">
+        <div class="enter-glow-ring"></div>
+        <button id="enter-btn" onclick="enterArcade()">
+            <span class="enter-icon">⚡</span>
+            ENTER ARCADE
+        </button>
+        <p class="enter-sub">All 10 games. No loading. Pure adrenaline.</p>
+    </div>
+</div>
+
+<!-- ══════════ MAIN APP ══════════ -->
+<div id="app" class="hidden">
+
+    <!-- MENU SCREEN -->
+    <div id="menu">
+        <div class="menu-bg-glow"></div>
+
+        <div class="header-glow">
+            <div class="logo-wrap">
+                <span class="logo-fx">FZ</span>
+                <div class="logo-text">
+                    <h1>FUNZONE</h1>
+                    <p>10-in-1 Arcade</p>
                 </div>
             </div>
         </div>
 
-        <div id="game-container" class="hidden">
-            <div class="hud glass-panel">
-                <button id="back-btn" onclick="showMenu()">◀ Menu</button>
-                <span id="current-score">Score: 0</span>
-            </div>
-            
-            <div class="canvas-wrapper">
-                <canvas id="gameCanvas"></canvas>
-            </div>
+        <div class="section-label">— Choose Your Game —</div>
 
-            <div id="game-over" class="glass-panel hidden">
-                <h2>GAME OVER</h2>
-                <button onclick="restartCurrentGame()" class="btn-primary">Try Again</button>
+        <div class="game-list">
+            <button class="game-btn" onclick="startGame('snake')" style="--accent:#00ffcc">
+                <span class="btn-icon">🐍</span>
+                <span class="btn-info">
+                    <span class="btn-name">Snake</span>
+                    <span class="btn-hint">Swipe to slither</span>
+                </span>
+                <span class="btn-badge">Classic</span>
+            </button>
+            <button class="game-btn" onclick="startGame('dino')" style="--accent:#ffd700">
+                <span class="btn-icon">🦖</span>
+                <span class="btn-info">
+                    <span class="btn-name">Dino Run</span>
+                    <span class="btn-hint">Tap to jump</span>
+                </span>
+                <span class="btn-badge">Runner</span>
+            </button>
+            <button class="game-btn" onclick="startGame('flappy')" style="--accent:#00b4ff">
+                <span class="btn-icon">🧊</span>
+                <span class="btn-info">
+                    <span class="btn-name">Flappy Block</span>
+                    <span class="btn-hint">Tap to flap</span>
+                </span>
+                <span class="btn-badge">Reflex</span>
+            </button>
+            <button class="game-btn" onclick="startGame('coin')" style="--accent:#ffd700">
+                <span class="btn-icon">💰</span>
+                <span class="btn-info">
+                    <span class="btn-name">Coin Catcher</span>
+                    <span class="btn-hint">L/R tap</span>
+                </span>
+                <span class="btn-badge">Catcher</span>
+            </button>
+            <button class="game-btn" onclick="startGame('reaction')" style="--accent:#ff6b35">
+                <span class="btn-icon">⚡</span>
+                <span class="btn-info">
+                    <span class="btn-name">Reaction Strike</span>
+                    <span class="btn-hint">Tap when green</span>
+                </span>
+                <span class="btn-badge">Speed</span>
+            </button>
+            <button class="game-btn" onclick="startGame('moto')" style="--accent:#ff0055">
+                <span class="btn-icon">🏍️</span>
+                <span class="btn-info">
+                    <span class="btn-name">Moto Dodge</span>
+                    <span class="btn-hint">L/R tap lanes</span>
+                </span>
+                <span class="btn-badge">Dodge</span>
+            </button>
+            <button class="game-btn" onclick="startGame('shooter')" style="--accent:#b145e9">
+                <span class="btn-icon">🚀</span>
+                <span class="btn-info">
+                    <span class="btn-name">Space Shooter</span>
+                    <span class="btn-hint">Tap to fire</span>
+                </span>
+                <span class="btn-badge">Shooter</span>
+            </button>
+            <button class="game-btn" onclick="startGame('color')" style="--accent:#ff0055">
+                <span class="btn-icon">🚥</span>
+                <span class="btn-info">
+                    <span class="btn-name">Color Match</span>
+                    <span class="btn-hint">Tap to switch</span>
+                </span>
+                <span class="btn-badge">Puzzle</span>
+            </button>
+            <button class="game-btn" onclick="startGame('pong')" style="--accent:#00ffcc">
+                <span class="btn-icon">🏓</span>
+                <span class="btn-info">
+                    <span class="btn-name">Pong Solo</span>
+                    <span class="btn-hint">L/R tap</span>
+                </span>
+                <span class="btn-badge">Classic</span>
+            </button>
+            <button class="game-btn" onclick="startGame('stack')" style="--accent:#ffd700">
+                <span class="btn-icon">🏢</span>
+                <span class="btn-info">
+                    <span class="btn-name">Tower Stack</span>
+                    <span class="btn-hint">Tap to drop</span>
+                </span>
+                <span class="btn-badge">Timing</span>
+            </button>
+        </div>
+
+        <div class="score-board glass-panel">
+            <h2><span class="trophy">🏆</span> Leaderboard</h2>
+            <div class="score-grid">
+                <div class="score-row"><span class="s-icon">🐍</span><span class="s-name">Snake</span><span id="score-snake" class="highlight">0</span></div>
+                <div class="score-row"><span class="s-icon">🦖</span><span class="s-name">Dino</span><span id="score-dino" class="highlight">0</span></div>
+                <div class="score-row"><span class="s-icon">🧊</span><span class="s-name">Flappy</span><span id="score-flappy" class="highlight">0</span></div>
+                <div class="score-row"><span class="s-icon">💰</span><span class="s-name">Coins</span><span id="score-coin" class="highlight">0</span></div>
+                <div class="score-row"><span class="s-icon">⚡</span><span class="s-name">Reaction</span><span id="score-reaction" class="highlight">0</span></div>
+                <div class="score-row"><span class="s-icon">🏍️</span><span class="s-name">Moto</span><span id="score-moto" class="highlight">0</span></div>
+                <div class="score-row"><span class="s-icon">🚀</span><span class="s-name">Shooter</span><span id="score-shooter" class="highlight">0</span></div>
+                <div class="score-row"><span class="s-icon">🚥</span><span class="s-name">Color</span><span id="score-color" class="highlight">0</span></div>
+                <div class="score-row"><span class="s-icon">🏓</span><span class="s-name">Pong</span><span id="score-pong" class="highlight">0</span></div>
+                <div class="score-row"><span class="s-icon">🏢</span><span class="s-name">Tower</span><span id="score-stack" class="highlight">0</span></div>
             </div>
         </div>
+
+        <div class="menu-footer">
+            <button class="footer-btn" onclick="showParallax()">🌌 Back to Intro</button>
+        </div>
     </div>
-    <script src="script.js"></script>
+
+    <!-- GAME CONTAINER -->
+    <div id="game-container" class="hidden">
+        <div class="hud glass-panel">
+            <button id="back-btn" onclick="showMenu()">◀ Menu</button>
+            <span id="game-title-hud">Game</span>
+            <span id="current-score">0</span>
+        </div>
+
+        <div class="canvas-wrapper">
+            <canvas id="gameCanvas"></canvas>
+        </div>
+
+        <div id="game-over" class="glass-panel hidden">
+            <div class="gameover-icon">💀</div>
+            <h2>GAME OVER</h2>
+            <p id="gameover-score-text"></p>
+            <button onclick="restartCurrentGame()" class="btn-primary">↩ Try Again</button>
+            <button onclick="showMenu()" class="btn-secondary">☰ Menu</button>
+        </div>
+    </div>
+</div>
+
+<script src="script.js"></script>
 </body>
 </html>
