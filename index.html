@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Funzone Arcade</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="app">
+        <div id="menu">
+            <div class="header-glow">
+                <h1>FUNZONE</h1>
+                <p>10-in-1 Arcade</p>
+            </div>
+            
+            <div class="game-list">
+                <button onclick="startGame('snake')"><span class="icon">🐍</span> Snake <small>(Swipe)</small></button>
+                <button onclick="startGame('dino')"><span class="icon">🦖</span> Dino Run <small>(Tap)</small></button>
+                <button onclick="startGame('flappy')"><span class="icon">🧊</span> Flappy Block <small>(Tap)</small></button>
+                <button onclick="startGame('coin')"><span class="icon">💰</span> Coin Catcher <small>(L/R Tap)</small></button>
+                <button onclick="startGame('reaction')"><span class="icon">⚡</span> Reaction Strike <small>(Tap)</small></button>
+                <button onclick="startGame('moto')"><span class="icon">🏍️</span> Moto Dodge <small>(L/R Tap)</small></button>
+                <button onclick="startGame('shooter')"><span class="icon">🚀</span> Space Shooter <small>(Tap)</small></button>
+                <button onclick="startGame('color')"><span class="icon">🚥</span> Color Match <small>(Tap)</small></button>
+                <button onclick="startGame('pong')"><span class="icon">🏓</span> Pong Solo <small>(L/R Tap)</small></button>
+                <button onclick="startGame('stack')"><span class="icon">🏢</span> Tower Stack <small>(Tap)</small></button>
+            </div>
+
+            <div class="score-board glass-panel">
+                <h2>Leaderboard</h2>
+                <div class="score-grid">
+                    <p><span>Snake</span> <span id="score-snake" class="highlight">0</span></p>
+                    <p><span>Dino</span> <span id="score-dino" class="highlight">0</span></p>
+                    <p><span>Flappy</span> <span id="score-flappy" class="highlight">0</span></p>
+                    <p><span>Coins</span> <span id="score-coin" class="highlight">0</span></p>
+                    <p><span>Reaction</span> <span id="score-reaction" class="highlight">0</span></p>
+                    <p><span>Moto Dodge</span> <span id="score-moto" class="highlight">0</span></p>
+                    <p><span>Shooter</span> <span id="score-shooter" class="highlight">0</span></p>
+                    <p><span>Color Match</span> <span id="score-color" class="highlight">0</span></p>
+                    <p><span>Pong Solo</span> <span id="score-pong" class="highlight">0</span></p>
+                    <p><span>Tower Stack</span> <span id="score-stack" class="highlight">0</span></p>
+                </div>
+            </div>
+        </div>
+
+        <div id="game-container" class="hidden">
+            <div class="hud glass-panel">
+                <button id="back-btn" onclick="showMenu()">◀ Menu</button>
+                <span id="current-score">Score: 0</span>
+            </div>
+            
+            <div class="canvas-wrapper">
+                <canvas id="gameCanvas"></canvas>
+            </div>
+
+            <div id="game-over" class="glass-panel hidden">
+                <h2>GAME OVER</h2>
+                <button onclick="restartCurrentGame()" class="btn-primary">Try Again</button>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
